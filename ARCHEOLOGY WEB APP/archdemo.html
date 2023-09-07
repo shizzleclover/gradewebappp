@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Course Management Web App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f1f1;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fdf6e3;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #e74c3c;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #3498db;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 10px 15px;
+            font-size: 16px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+
+        .erase-btn {
+            background-color: #e74c3c;
+        }
+
+        .erase-btn:hover {
+            background-color: #c0392b;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #f2f2f2;
+        }
+
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .result-container {
+            margin-top: 20px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        @media screen and (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+
+            button {
+                padding: 8px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Course Management</h2>
+        <label for="numCourses">Number of Courses:</label>
+        <input type="number" id="numCourses">
+        <button onclick="generateTable()">Generate Table</button>
+        <button class="erase-btn" onclick="eraseData()">Erase</button>
+        <div id="output"></div>
+        <div class="result-container">
+            <p>Total Units Registered: <span id="totalUnitsRegistered">0</span></p>
+            <p>Total Units Taken: <span id="totalUnitsTaken">0</span></p>
+            <p>Total Units Passed: <span id="totalUnitsPassed">0</span></p>
+            <p>GPA: <span id="gpa">0</span></p>
+            <p>Weighted GPA: <span id="weightedGPA">0</span></p>
+            <p>Total Weighted GPA: <span id="totalWeightedGPA">0</span></p>
+            <p>Cumulative GPA: <span id="cumulativeGPA">0</span></p>
+        </div>
+    </div>
+
+    <script>
+        function generateTable() {
+            const numCourses = parseInt(document.getElementById("numCourses").value);
+            let tableHTML = '<table><tr><th>Course Name</th><th>Units</th><th>Units Taken</th><th>Mark</th><th>Grade</th><th>Remark</th></tr>';
+            let totalUnitsRegistered = 0;
+            let totalUnitsTaken = 0;
+            let totalUnitsPassed = 0;
+            let totalGPA = 0;
+            let totalWeightedGPA = 0;
+
+            for (let i = 0; i < numCourses; i++) {
+                const courseName = prompt(`Enter the name of course ${i + 1}`);
+                const units = parseInt(prompt(`Enter the units for ${courseName}`));
+                const unitsTaken = parseInt(prompt(`Enter the units taken for ${courseName}`));
+                const mark = parseInt(prompt(`Enter the mark for ${courseName}`));
+                const grade = (mark >= 50) ? 'Passed' : 'Failed';
+                const remark = (mark >= 50) ? 'Passed' : 'Failed';
+                const gpa = (mark >= 50) ? 4.0 : 0.0; // GPA calculation
+                const weightedGPA = gpa * unitsTaken;
+
+                totalUnitsRegistered += units;
+                totalUnitsTaken += unitsTaken;
+                if (mark >= 50) {
+                    totalUnitsPassed += units;
+                    totalGPA += gpa;
+                    totalWeightedGPA += weightedGPA;
+                }
+
+                tableHTML += `<tr><td>${courseName}</td><td>${units}</td><td>${unitsTaken}</td><td>${mark}</td><td>${grade}</td><td>${remark}</td></tr>`;
+            }
+
+            tableHTML += '</table>';
+            document.getElementById("output").innerHTML = tableHTML;
+
+            // Update result container
+            document.getElementById("totalUnitsRegistered").textContent = totalUnitsRegistered;
+            document.getElementById("totalUnitsTaken").textContent = totalUnitsTaken;
+            document.getElementById("totalUnitsPassed").textContent = totalUnitsPassed;
+            document.getElementById("gpa").textContent = (totalGPA / numCourses).toFixed(2);
+            document.getElementById("weightedGPA").textContent = (totalWeightedGPA / totalUnitsTaken).toFixed(2);
+            document.getElementById("totalWeightedGPA").textContent = totalWeightedGPA.toFixed(2);
+            document.getElementById("cumulativeGPA").textContent = (totalWeightedGPA / totalUnitsTaken).toFixed(2);
+        }
+
+        function eraseData() {
+            document.getElementById("numCourses").value = "";
+            document.getElementById("output").innerHTML = "";
+            document.getElementById("totalUnitsRegistered").textContent = "0";
+            document.getElementById("totalUnitsTaken").textContent = "0";
+            document.getElementById("totalUnitsPassed").textContent = "0";
+            document.getElementById("gpa").textContent = "0";
+            document.getElementById("weightedGPA").textContent = "0";
+            document.getElementById("totalWeightedGPA").textContent = "0";
+            document.getElementById("cumulativeGPA").textContent = "0";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Course Information Table</title>
+    <link rel="stylesheet" href="arc4html.css">
+</head>
+<body style="background-color: #f5f5f5; font-family: Arial, sans-serif;">
+
+    <!-- Heading for the input form -->
+    <h1 style="color: #333;">Course Information Input Form</h1>
+
+    <!-- Form for inputting course-related information -->
+    <div>
+    <form id="courseForm">
+        <!-- Input fields for course name, session, description, units, status, marks, and remarks -->
+        <label for="courseName" style="color: #333;">Course Name:</label>
+        <input type="text" id="courseName" name="courseName" required style="width: 20%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 1%;"><br>
+
+        <label for="session" style="color: #333;">Session:</label>
+        <input type="text" id="session" name="session" required style="width: 20%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc;"><br>
+
+        <label for="courseDescription" style="color: #333;">Course Description:</label>
+        <input type="text" id="courseDescription" name="courseDescription" required style="width: 20%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc;"><br>
+
+        <label for="units" style="color: #333;">Units:</label>
+        <input type="number" id="units" name="units" required style="width: 20%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc;"><br>
+
+        <label for="status" style="color: #333;">Status:</label>
+        <input type="text" id="status" name="status" required style="width: 20%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc;"><br>
+
+        <label for="marks" style="color: #333;">Marks:</label>
+        <input type="number" id="marks" name="marks" required style="width: 20%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc;"><br>
+
+        <label for="remarks" style="color: #333;">Remarks:</label>
+        <input type="text" id="remarks" name="remarks" required style="width: 20%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc;"><br>
+
+        <!-- Button to submit the form and add a row to the table -->
+        <input type="button" value="Submit" onclick="addRow()" style="background-color: #007BFF; color: #fff; padding: 10px 20px; border-radius: 20%; cursor: pointer; border: ;">
+    </form>
+    </div>
+
+    <!-- Heading for the course information table -->
+    <h2 style="color: #333;">Course Information Table</h2>
+
+    <!-- Table to display course information -->
+    <table id="courseTable" border="1" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+        <thead>
+            <!-- Table headers -->
+            <tr style="background-color:wheat; color:black;">
+                <th>Course Name</th>
+                <th>Session</th>
+                <th>Course Description</th>
+                <th>Units</th>
+                <th>Status</th>
+                <th>Marks</th>
+                <th>Remarks</th>
+                <th>Grade</th>
+                <th>GP</th>
+                <th>WGP</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Rows for displaying course information will be added here dynamically -->
+        </tbody>
+        <tfoot>
+            <!-- Table footer to display the total units -->
+            <tr style="background-color: #333; color: #fff;">
+                <td colspan="3"></td>
+                <td>Total Units:</td>
+                <!-- Display the calculated total units here -->
+                <td id="totalUnits">0</td>
+                <td colspan="4"></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <!-- JavaScript code for adding rows and calculating grades, GP, WGP, and total units -->
+    <script>
+        var totalUnits = 0; // Initialize total units
+
+        function addRow() {
+            var courseName = document.getElementById("courseName").value;
+            var session = document.getElementById("session").value;
+            var courseDescription = document.getElementById("courseDescription").value;
+            var units = document.getElementById("units").value;
+            var status = document.getElementById("status").value;
+            var marks = document.getElementById("marks").value;
+            var remarks = document.getElementById("remarks").value;
+
+            // Calculate Grade based on the specified grading ranges
+            function calculateGrade(marks) {
+                if (marks >= 70 && marks <= 100) return 'A';
+                else if (marks >= 60 && marks <= 69) return 'B';
+                else if (marks >= 50 && marks <= 59) return 'C';
+                else if (marks >= 40 && marks <= 49) return 'D';
+                else if (marks >= 30 && marks <= 39) return 'E';
+                else if (marks >= 0 && marks <= 29) return 'F';
+                else return 'Invalid'; // Handle invalid marks
+            }
+
+            // Calculate GP based on the Grade
+            function calculateGP(grade) {
+                var gpValues = {
+                    'A': 4.0,
+                    'B': 3.0,
+                    'C': 2.0,
+                    'D': 1.0,
+                    'E': 0.0,
+                    'F': 0.0
+                };
+                return gpValues[grade] || 0.0; // Default to 0.0 if grade is not found
+            }
+
+            // Calculate WGP (Weighted Grade Points) based on GP and units
+            function calculateWGP(gp, units) {
+                return gp * units;
+            }
+
+            // Calculate Grade, GP, and WGP for the current row
+            var grade = calculateGrade(marks);
+            var gp = calculateGP(grade);
+            var wgp = calculateWGP(gp, units);
+
+            // Add the row to the table
+            var table = document.getElementById("courseTable").getElementsByTagName('tbody')[0];
+            var newRow = table.insertRow(table.rows.length);
+            var cell1 = newRow.insertCell(0);
+            var cell2 = newRow.insertCell(1);
+            var cell3 = newRow.insertCell(2);
+            var cell4 = newRow.insertCell(3);
+            var cell5 = newRow.insertCell(4);
+            var cell6 = newRow.insertCell(5);
+            var cell7 = newRow.insertCell(6);
+            var cell8 = newRow.insertCell(7);
+            var cell9 = newRow.insertCell(8);
+            var cell10 = newRow.insertCell(9);
+
+            cell1.innerHTML = courseName;
+            cell2.innerHTML = session;
+            cell3.innerHTML = courseDescription;
+            cell4.innerHTML = units;
+            cell5.innerHTML = status;
+            cell6.innerHTML = marks;
+            cell7.innerHTML = remarks;
+            cell8.innerHTML = grade;
+            cell9.innerHTML = gp;
+            cell10.innerHTML = wgp;
+
+            // Update the total units
+            totalUnits += parseFloat(units); // Parse units as a float
+            document.getElementById("totalUnits").textContent = totalUnits;
+
+            // Reset the form
+            document.getElementById("courseForm").reset();
+        }
+    </script>
+</body>
+</html>

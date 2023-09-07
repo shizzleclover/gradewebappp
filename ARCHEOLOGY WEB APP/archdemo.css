@@ -1,0 +1,68 @@
+body {
+    background-color: #FCE4D6; /* Peach background */
+    font-family: Arial, sans-serif; /* Standard font for readability */
+}
+
+h1 {
+    color: #FF5722; /* Warm orange text color */
+    text-align: center;
+    text-transform: uppercase; /* Uppercase text for emphasis */
+    margin-top: 20px; /* Space at the top */
+}
+
+form {
+    margin: 20px auto;
+    max-width: 600px;
+    padding: 20px;
+    background-color: #FFFFFF; /* White form background */
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
+
+label {
+    color: #333333; /* Dark gray label text color */
+}
+
+input[type="text"], select, input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #CCCCCC; /* Light gray border */
+    border-radius: 5px;
+    background-color: #F5F5F5; /* Light gray input background */
+    color: #333333; /* Dark gray text color */
+}
+
+button {
+    background-color: #FF5722; /* Warm orange button background */
+    color: #FFFFFF; /* White button text color */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth color transition on hover */
+}
+
+button:hover {
+    background-color: #E64A19; /* Darker orange on hover */
+}
+
+table {
+    background-color: #FFFFFF; /* White table background */
+    border-collapse: collapse; /* Remove table borders */
+    width: 100%;
+}
+
+th, td {
+    border: none; /* No cell borders */
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #FF5722; /* Orange header background */
+    color: #FFFFFF; /* White text color */
+    text-transform: uppercase; /* Uppercase header text */
+}
+
+/* Add more inviting styles as needed */
